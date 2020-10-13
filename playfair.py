@@ -1,5 +1,4 @@
 import sys
-import re
 
 ciphertext = sys.argv[2]
 keytext = sys.argv[3]
@@ -37,6 +36,25 @@ def encode(cipher, key):
                 encoded += letterByIndex([aind[0], bind[1]], key)
     print(encoded)
 
+def decode(cipher, key):
+    decoded = ""
+    for i in range(0, (len(cipher) / 2)):
+        a = cipher[(i * 2)]
+        b = cipher[(i * 2) + 1]
+        aind = getIndex(a, key)
+        bind = getIndex(b, key)
+        if (aind[0] == bind[0]):
+            decoded += letterByIndex([(aind[0] - 1) % 5, aind[1]], key)
+            decoded += letterByIndex([(bind[0] - 1) % 5, bind[1]], key)
+        elif (aind[1] == bind[1]):
+            decoded += letterByIndex([aind[0], (aind[1] - 1) % 5], key)
+            decoded += letterByIndex([bind[0], (bind[1] - 1) % 5], key)
+        else:
+            decoded += letterByIndex([bind[0], aind[1]], key)
+            decoded += letterByIndex([aind[0], bind[1]], key)
+    print(decoded)
+
+
 def getIndex(letter, key):
     index = key.find(letter)
     x = index % 5
@@ -49,3 +67,5 @@ def letterByIndex(index, key):
 
 if sys.argv[1] == "encode":
     encode(ciphertext, keytext)
+if sys.argv[1] == "decode":
+    decode(ciphertext, keytext)
