@@ -5,17 +5,17 @@ ciphertext = sys.argv[1]
 keytext = sys.argv[2]
 
 def encode(cipher, key):
-    cipher = ''.join(cipher.split()).upper().replace("j", "i")
+    cipher = ''.join(cipher.split()).upper().replace("J", "I")
     doubleletters = True
     while(doubleletters):
         x = False
         for i in range(0, len(cipher) - 1):
             if cipher[i] == cipher[i + 1]:
                 x = True
-                cipher = cipher[:i + 1] + "x" + cipher[i + 1:]
+                cipher = cipher[:i + 1] + "X" + cipher[i + 1:]
         doubleletters = x
     if len(cipher) % 2 == 1:
-        cipher += "x"
+        cipher += "X"
     encoded = ""
     for i in range(0, len(cipher)/2):
         a = cipher[i * 2]
